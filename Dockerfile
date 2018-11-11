@@ -11,9 +11,13 @@ CMD ["/sbin/my_init"]
 RUN apt-get update \
     && apt-get --assume-yes install wget \
     && cd /tmp \
-    && wget -q ${RESTIC_DOWNLOAD}/v${RCLONE_VERSION}/restic_${RCLONE_VERSION}_linux_amd64.bz2 \
-    && bzip2 -d /tmp/restic_${RCLONE_VERSION}_linux_amd64.bz2 \
-    && mv /tmp/restic_${RCLONE_VERSION}_linux_amd64 /usr/bin \
+    && wget -q ${RESTIC_DOWNLOAD}/v${RESTIC_VERSION}/restic_${RESTIC_VERSION}_linux_amd64.bz2 \
+    && bunzip2 -d /tmp/restic_${RESTIC_VERSION}_linux_amd64.bz2 \
+    && mv /tmp/restic_${RESTIC_VERSION}_linux_amd64 /usr/bin/restic \
+    && chmod u+x /usr/bin/restic \
+    && mkdir /source && mkdir /source/system && mkdir /source/data && mkdir /target \
     && apt-get --assume-yes purge wget
+
+VOLUME ["/source", "/target"]
 
 RUN apt-get --assume-yes autoremove && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
