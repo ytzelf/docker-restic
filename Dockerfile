@@ -4,8 +4,7 @@ MAINTAINER ytzelf
 
 ENV ARCH=amd64 \
     RESTIC_VERSION=0.9.4 \
-    RESTIC_DOWNLOAD=https://github.com/restic/restic/releases/download/ \
-    DISABLE_CRON=1
+    RESTIC_DOWNLOAD=https://github.com/restic/restic/releases/download/
 
 CMD ["/sbin/my_init"]
 
